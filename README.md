@@ -106,6 +106,12 @@ npm run lint          # ESLint with TypeScript support
 
 # Preview production build
 npm run preview       # Serves built application locally
+
+# Testing (54 tests available)
+npm test -- --run     # Run all tests once
+npm test              # Run tests in watch mode
+npm run test:coverage # Run tests with coverage report
+npm run test:ui       # Run tests with interactive UI
 ```
 
 ### Development Server Configuration
@@ -207,6 +213,250 @@ This design enables:
 - **TypeScript compilation** in build pipeline
 - **Asset handling** with optimized bundling
 - **Development proxy** for API integration readiness
+
+## 🧪 Testing Suite
+
+This project includes a comprehensive testing suite with **54 passing tests** covering all aspects of the application from unit tests to end-to-end user flows.
+
+### Testing Framework & Tools
+
+#### Core Testing Stack
+- **Vitest 4.0.6** - Lightning-fast test runner with native TypeScript support
+- **React Testing Library 16.3.0** - Component testing with best practices
+- **Jest DOM 6.9.1** - Enhanced DOM matchers for better assertions
+- **User Event 14.6.1** - Realistic user interaction simulation
+- **jsdom 27.1.0** - Browser environment simulation for Node.js
+
+#### Coverage & Reporting
+- **@vitest/coverage-v8** - Code coverage with V8 engine
+- **Coverage Thresholds**: 80% minimum for branches, functions, lines, and statements
+- **Multiple reporters**: Text, JSON, and HTML coverage reports
+
+### Test Architecture
+
+#### 📁 Test File Structure
+```
+src/
+├── models/
+│   └── Animal.test.ts              # Model unit tests (18 tests)
+├── components/
+│   └── Animal.test.tsx             # Component tests (22 tests)
+├── test/
+│   ├── setup.ts                    # Global test configuration
+│   └── e2e.test.tsx               # End-to-end tests (5 tests)
+├── types/
+│   └── css-modules.test.ts        # Type declaration tests (2 tests)
+├── App.test.tsx                   # App integration tests (5 tests)
+└── main.test.tsx                  # Entry point tests (2 tests)
+```
+
+### 📊 Test Coverage Overview
+
+#### Unit Tests (18 tests)
+**Animal Model Tests** (`src/models/Animal.test.ts`)
+- ✅ Constructor validation with various input types
+- ✅ Method functionality (`speak()`, `getInfo()`)
+- ✅ Property immutability and TypeScript constraints
+- ✅ Default animals array validation
+- ✅ Edge cases: empty strings, special characters, unique IDs
+
+#### Component Tests (22 tests)
+**Animal Component Tests** (`src/components/Animal.test.tsx`)
+- ✅ Initial rendering and UI elements
+- ✅ Animal selection and state management
+- ✅ Speech functionality and output display
+- ✅ Image handling and accessibility
+- ✅ Keyboard navigation support
+- ✅ Error handling and edge cases
+
+#### Integration Tests (5 tests)
+**App Component Tests** (`src/App.test.tsx`)
+- ✅ Component mounting and structure
+- ✅ Child component integration
+- ✅ Lifecycle management
+
+#### End-to-End Tests (5 tests)
+**User Flow Tests** (`src/test/e2e.test.tsx`)
+- ✅ Complete user interaction workflows
+- ✅ Multi-animal selection sequences
+- ✅ Accessibility compliance throughout flows
+- ✅ Keyboard-only navigation
+- ✅ Rapid interaction handling
+
+#### Support Tests (4 tests)
+- ✅ Entry point validation (`main.test.tsx`)
+- ✅ CSS modules type safety (`css-modules.test.ts`)
+
+### 🚀 Running Tests
+
+#### Available Test Commands
+```bash
+# Run all tests once
+npm test -- --run
+
+# Run tests in watch mode (recommended for development)
+npm test
+
+# Run tests with detailed output
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Run tests with interactive UI
+npm run test:ui
+```
+
+#### Test Configuration
+The testing environment is configured via `vitest.config.ts`:
+- **Environment**: jsdom for browser simulation
+- **Globals**: Enabled for describe/it/expect without imports
+- **CSS Support**: Full CSS modules and styles testing
+- **Mock Configuration**: Automatic image and module mocking
+
+### 🎯 Test Quality Standards
+
+#### Testing Principles
+- **Behavior-Driven Testing**: Focus on user outcomes rather than implementation details
+- **Accessibility-First**: All tests validate ARIA attributes and keyboard navigation
+- **Semantic Queries**: Using `getByRole`, `getByLabelText` for robust element selection
+- **Comprehensive Mocking**: Proper isolation without testing implementation details
+
+#### Edge Cases Covered
+- ✅ Empty and null input handling
+- ✅ Rapid user interactions and race conditions
+- ✅ Special characters in animal data
+- ✅ Keyboard-only navigation flows
+- ✅ Screen reader compatibility
+- ✅ Component lifecycle events
+- ✅ Error boundaries and graceful degradation
+
+#### Accessibility Testing
+- **ARIA Attributes**: All interactive elements tested for proper ARIA labels
+- **Keyboard Navigation**: Complete keyboard-only interaction flows
+- **Screen Reader Support**: Semantic HTML structure validation
+- **Focus Management**: Tab order and focus trap testing
+- **Live Regions**: Dynamic content announcements
+
+### 📈 Coverage Metrics
+
+#### Current Coverage Targets
+- **Branches**: ≥80% 
+- **Functions**: ≥80%
+- **Lines**: ≥80%
+- **Statements**: ≥80%
+
+#### Excluded from Coverage
+- Test files (`*.test.{ts,tsx}`)
+- Configuration files (`*.config.{ts,js}`)
+- Type declarations (`*.d.ts`)
+- Entry points (`main.tsx`)
+- Node modules and build artifacts
+
+### 🔧 Test Development Workflow
+
+#### Writing New Tests
+1. **Unit Tests**: Create alongside new models/utilities
+2. **Component Tests**: Test user interactions and accessibility
+3. **Integration Tests**: Verify component communication
+4. **E2E Tests**: Validate complete user workflows
+
+#### Test File Naming
+- **Unit Tests**: `*.test.ts` for pure functions/classes
+- **Component Tests**: `*.test.tsx` for React components
+- **Integration Tests**: `integration.test.tsx` for multi-component flows
+- **E2E Tests**: `e2e.test.tsx` for complete user journeys
+
+#### Mock Strategy
+- **External Dependencies**: Mock at module level
+- **Images/Assets**: Automatic mocking via Vitest configuration
+- **CSS Modules**: Mock with class name mapping
+- **React Components**: Strategic mocking for isolation
+
+### 🎨 Test Examples
+
+#### Model Testing Pattern
+```typescript
+describe('Animal', () => {
+  let animal: Animal
+
+  beforeEach(() => {
+    animal = new Animal('Buddy', 'Dog', 'Woof')
+  })
+
+  it('should create animal with correct properties', () => {
+    expect(animal.name).toBe('Buddy')
+    expect(animal.species).toBe('Dog')
+    expect(animal.sound).toBe('Woof')
+  })
+})
+```
+
+#### Component Testing Pattern
+```typescript
+describe('AnimalComponent', () => {
+  it('should show selected animal info when clicked', async () => {
+    render(<AnimalComponent />)
+    
+    const buddyButton = screen.getByLabelText('Select Buddy the Dog')
+    await user.click(buddyButton)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Name: Buddy, Species: Dog')).toBeInTheDocument()
+    })
+  })
+})
+```
+
+#### Accessibility Testing Pattern
+```typescript
+it('should have proper accessibility attributes', () => {
+  render(<AnimalComponent />)
+  
+  const animalGroup = screen.getByRole('group', { name: 'Animal selection buttons' })
+  expect(animalGroup).toBeInTheDocument()
+  
+  const buttons = screen.getAllByRole('button')
+  buttons.forEach(button => {
+    expect(button).toHaveAttribute('aria-pressed')
+    expect(button).toHaveAttribute('aria-label')
+  })
+})
+```
+
+### 🐛 Debugging Tests
+
+#### Common Issues & Solutions
+- **Timing Issues**: Use `waitFor()` for async state updates
+- **Mock Problems**: Check mock configuration in `setup.ts`
+- **Accessibility Failures**: Validate ARIA attributes and semantic HTML
+- **Coverage Gaps**: Review untested code paths and edge cases
+
+#### Debug Commands
+```bash
+# Run specific test file
+npx vitest run src/components/Animal.test.tsx
+
+# Run tests with verbose output
+npx vitest run --reporter=verbose
+
+# Debug specific test pattern
+npx vitest run --grep="should handle animal selection"
+```
+
+### 📚 Testing Documentation
+
+For detailed testing guidelines and best practices, see:
+- `TESTING.md` - Comprehensive testing strategy
+- `TEST_SUMMARY.md` - Complete test results and coverage
+- Individual test files for implementation examples
+
+The testing suite ensures:
+- **Reliability**: All functionality works as expected
+- **Accessibility**: Full compliance with WCAG guidelines
+- **Maintainability**: Tests serve as living documentation
+- **Regression Prevention**: Automated validation of all features
+- **Code Quality**: High coverage with meaningful assertions
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
