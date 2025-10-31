@@ -1,0 +1,206 @@
+/* Animal Component CSS Module */
+
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.animalSelectionGroup {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.animalButtonContainer {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.animalButton {
+  padding: 10px;
+  background-color: transparent;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.animalButton:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  border-color: rgba(0, 123, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.animalButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+}
+
+.animalButton.selected {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.animalButton.selected:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.animalImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.animalButton:hover .animalImage {
+  transform: scale(1.05);
+}
+
+.animalName {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.animalButton.selected .animalName {
+  color: white;
+}
+
+.selectedAnimalSection {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.selectedAnimalTitle {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 18px;
+}
+
+.selectedAnimalInfo {
+  margin: 0 0 15px 0;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.speakButton {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.speakButton:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.speakButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+}
+
+.speakButton:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.speechOutputSection {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #c3e6cb;
+  animation: fadeInSlide 0.3s ease-out;
+}
+
+.speechOutputTitle {
+  margin: 0 0 10px 0;
+  color: #155724;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.speechOutputText {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #155724;
+}
+
+/* Animations */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  .animalButtonContainer {
+    gap: 15px;
+  }
+  
+  .animalImage {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .animalName {
+    font-size: 12px;
+  }
+  
+  .speakButton {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .animalButtonContainer {
+    gap: 10px;
+  }
+  
+  .animalImage {
+    width: 60px;
+    height: 60px;
+  }
+}
