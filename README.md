@@ -7,9 +7,13 @@ A React TypeScript application demonstrating object-oriented programming princip
 ### Application in Action
 
 <video width="100%" controls>
-  <source src="https://github.com/user-attachments/assets/fcfc6103-6a04-4b35-bf5c-54c48b9e18c4" type="video/mp4">
-  <p>Your browser doesn't support HTML video. Here is a <a href="https://github.com/user-attachments/assets/fcfc6103-6a04-4b35-bf5c-54c48b9e18c4">link to the video</a> instead.</p>
+  <source src="https://github.com/user-attachments/assets/3310ea63-5711-4bb8-8cd2-b078996ed2dd" type="video/mp4">
+  <p>Your browser doesn't support HTML video. Here is a <a href="https://github.com/user-attachments/assets/3310ea63-5711-4bb8-8cd2-b078996ed2dd">link to the video</a> instead.</p>
 </video>
+
+
+https://github.com/user-attachments/assets/3310ea63-5711-4bb8-8cd2-b078996ed2dd
+
 
 *The application demonstrates seamless animal selection and speech functionality with real-time UI feedback and accessibility features.*
 
