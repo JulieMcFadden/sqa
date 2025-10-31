@@ -19,7 +19,17 @@ If you are developing a production application, we recommend updating the config
 
 A React TypeScript application demonstrating object-oriented programming principles with an interactive Animal component featuring polymorphic behavior and dynamic UI interactions.
 
-## 🏗️ Architecture Overview
+## � Demo
+
+### Application in Action
+
+
+https://github.com/user-attachments/assets/fcfc6103-6a04-4b35-bf5c-54c48b9e18c4
+
+
+*The application demonstrates seamless animal selection and speech functionality with real-time UI feedback and accessibility features.*
+
+## �🏗️ Architecture Overview
 
 This application showcases a clean separation of concerns with an object-oriented design pattern implemented in a modern React TypeScript environment.
 
