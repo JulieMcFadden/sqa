@@ -1,38 +1,30 @@
 import React, { useState } from 'react';
-
-// Animal object model
-class Animal {
-  name: string;
-  species: string;
-  sound: string;
-
-  constructor(name: string, species: string, sound: string) {
-    this.name = name;
-    this.species = species;
-    this.sound = sound;
-  }
-
-  // Speak function
-  speak(): string {
-    return `${this.name} the ${this.species} says: ${this.sound}!`;
-  }
-
-  // Additional method to get animal info
-  getInfo(): string {
-    return `Name: ${this.name}, Species: ${this.species}`;
-  }
-}
+import { Animal, DEFAULT_ANIMALS } from '../models/Animal';
+import dogImage from '../assets/dog.png';
+import catImage from '../assets/cat.png';
+import birdImage from '../assets/bird.png';
+import styles from './Animal.module.css';
 
 // React component
 const AnimalComponent: React.FC = () => {
-  const [animals, setAnimals] = useState<Animal[]>([
-    new Animal("Buddy", "Dog", "Woof"),
-    new Animal("Whiskers", "Cat", "Meow"),
-    new Animal("Charlie", "Bird", "Tweet")
-  ]);
+  const [animals] = useState<Animal[]>(DEFAULT_ANIMALS);
 
   const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null);
   const [speechOutput, setSpeechOutput] = useState<string>("");
+
+  // Helper function to get the correct image for each animal species
+  const getAnimalImage = (species: string): string => {
+    switch (species.toLowerCase()) {
+      case 'dog':
+        return dogImage;
+      case 'cat':
+        return catImage;
+      case 'bird':
+        return birdImage;
+      default:
+        return dogImage; // fallback
+    }
+  };
 
   const handleAnimalSelect = (animal: Animal) => {
     setSelectedAnimal(animal);
@@ -45,63 +37,49 @@ const AnimalComponent: React.FC = () => {
     }
   };
 
-  const addNewAnimal = () => {
-    const name = prompt("Enter animal name:");
-    const species = prompt("Enter animal species:");
-    const sound = prompt("Enter animal sound:");
-    
-    if (name && species && sound) {
-      const newAnimal = new Animal(name, species, sound);
-      setAnimals([...animals, newAnimal]);
-    }
-  };
-
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h2>Animal Speak Component</h2>
-      
-      <div style={{ marginBottom: '20px' }}>
-        <h3>Available Animals:</h3>
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          {animals.map((animal, index) => (
+    <div className={styles.container}>
+      <h2 className={styles.title}>SQA Screening Question #1 - Animals Speaking</h2>
+
+      <div 
+        className={styles.animalSelectionGroup}
+        role="group"
+        aria-label="Animal selection buttons"
+      >
+        <div className={styles.animalButtonContainer}>
+          {animals.map((animal) => (
             <button
-              key={index}
+              key={animal.id}
               onClick={() => handleAnimalSelect(animal)}
-              style={{
-                padding: '10px 15px',
-                backgroundColor: selectedAnimal === animal ? '#007bff' : '#f8f9fa',
-                color: selectedAnimal === animal ? 'white' : 'black',
-                border: '1px solid #ddd',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
+              aria-pressed={selectedAnimal === animal}
+              aria-label={`Select ${animal.name} the ${animal.species}`}
+              className={`${styles.animalButton} ${selectedAnimal === animal ? styles.selected : ''}`}
             >
-              {animal.name} ({animal.species})
+              <img
+                src={getAnimalImage(animal.species)}
+                alt={`${animal.name} the ${animal.species}`}
+                className={styles.animalImage}
+              />
+              <span className={styles.animalName}>
+                {animal.name}
+              </span>
             </button>
           ))}
         </div>
       </div>
 
       {selectedAnimal && (
-        <div style={{ 
-          backgroundColor: '#f8f9fa', 
-          padding: '15px', 
-          borderRadius: '5px',
-          marginBottom: '20px'
-        }}>
-          <h4>Selected Animal:</h4>
-          <p>{selectedAnimal.getInfo()}</p>
+        <div 
+          className={styles.selectedAnimalSection}
+          role="region"
+          aria-label="Selected animal information"
+        >
+          <h4 className={styles.selectedAnimalTitle}>Selected Animal:</h4>
+          <p className={styles.selectedAnimalInfo}>{selectedAnimal.getInfo()}</p>
           <button
             onClick={handleSpeak}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#28a745',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '16px'
-            }}
+            aria-label={`Make ${selectedAnimal.name} the ${selectedAnimal.species} speak`}
+            className={styles.speakButton}
           >
             Make {selectedAnimal.name} Speak!
           </button>
@@ -109,32 +87,16 @@ const AnimalComponent: React.FC = () => {
       )}
 
       {speechOutput && (
-        <div style={{
-          backgroundColor: '#d4edda',
-          color: '#155724',
-          padding: '15px',
-          borderRadius: '5px',
-          marginBottom: '20px',
-          border: '1px solid #c3e6cb'
-        }}>
-          <h4>🗣️ Speech Output:</h4>
-          <p style={{ fontSize: '18px', fontWeight: 'bold' }}>{speechOutput}</p>
+        <div 
+          className={styles.speechOutputSection}
+          role="region"
+          aria-label="Animal speech output"
+          aria-live="polite"
+        >
+          <h4 className={styles.speechOutputTitle}>🗣️ Speech Output:</h4>
+          <p className={styles.speechOutputText}>{speechOutput}</p>
         </div>
       )}
-
-      <button
-        onClick={addNewAnimal}
-        style={{
-          padding: '10px 20px',
-          backgroundColor: '#6c757d',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer'
-        }}
-      >
-        Add New Animal
-      </button>
     </div>
   );
 };
